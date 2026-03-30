@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Connect</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="left">
+            <h1>Video calls and meetings for everyone</h1>
+            <p>Connect, collaborate, and celebrate from anywhere with <b>Virtual Connect.</b></p>
+
+            <input type="text" id="username" placeholder="Enter Your Name">
+            
+            <div class="buttons">
+                <button class="new-meeting" onclick="startMeeting()">📅 New Meeting</button>
+                <input type="text" id="meetCode" placeholder="Enter a code or link">
+                <button class="join-btn" onclick="joinMeeting()">Join</button>
+            </div>
+            
+            <p class="learn-more"><a href="#">Learn more</a> about Virtual Connect.</p>
+        </div>
+
+        <div class="right">
+            <img src="meet-image.png" alt="Meeting Illustration">
+            <p style="font-size:x-large;">Get a link you can share</p>
+            <p>Click <b>New Meeting</b> to generate a link and invite others.</p>
+        </div>
+    </div>
+
+    <script>
+        function startMeeting() {
+            const username = document.getElementById('username').value.trim();
+            if (!username) {
+                alert('Please enter your name before starting.');
+                return;
+            }
+            const roomId = Math.random().toString(36).substr(2, 9);
+            window.location.href = `/${roomId}?username=${encodeURIComponent(username)}`;
+        }
+
+        function joinMeeting() {
+            const meetCode = document.getElementById('meetCode').value.trim();
+            const username = document.getElementById('username').value.trim();
+            if (!username) {
+                alert('Please enter your name before joining.');
+                return;
+            }
+            if (meetCode) {
+                window.location.href = `/${meetCode}?username=${encodeURIComponent(username)}`;
+            } else {
+                alert('Please enter a meeting code');
+            }
+        }
+    </script>
+
+</body>
+</html>
