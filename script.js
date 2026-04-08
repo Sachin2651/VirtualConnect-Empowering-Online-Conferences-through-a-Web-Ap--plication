@@ -11,7 +11,13 @@ const peers = {};
 const myPeer = new Peer(undefined, {
   host: "peerjs-server.herokuapp.com",
   secure: true,
-  port: 443
+  port: 443,
+  config: {
+    iceServers: [
+      { urls: "stun:stun.l.google.com:19302" },
+      { urls: "stun:stun1.l.google.com:19302" }
+    ]
+  }
 });
 
 let myVideoStream;
