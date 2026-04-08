@@ -9,21 +9,11 @@ const peers = {};
 
 // Initialize PeerJS
 const myPeer = new Peer(undefined, {
-  host: "0.peerjs.com",
-  port: 443,
+  host: "peerjs-server.herokuapp.com",
   secure: true,
-  config: {
-    iceServers: [
-      { urls: "stun:stun.l.google.com:19302" },
-      { urls: "stun:stun1.l.google.com:19302" },
-      {
-        urls: "turn:openrelay.metered.ca:80",
-        username: "openrelayproject",
-        credential: "openrelayproject"
-      }
-    ]
-  }
+  port: 443
 });
+
 let myVideoStream;
 
 // Get camera & mic
