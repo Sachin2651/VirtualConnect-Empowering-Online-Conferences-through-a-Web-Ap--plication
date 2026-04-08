@@ -9,8 +9,9 @@ const peers = {};
 
 // Initialize PeerJS
 const myPeer = new Peer(undefined, {
-  host: "/",
-  port: location.port || (location.protocol === "https:" ? 443 : 80),
+  host: "peerjs-server.herokuapp.com",
+  secure: true,
+  port: 443
 });
 
 let myVideoStream;
