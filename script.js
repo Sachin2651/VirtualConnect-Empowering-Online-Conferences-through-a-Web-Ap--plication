@@ -137,3 +137,52 @@ function copyMeetCode() {
 function leaveMeeting() {
   window.location.href = "/";
 }
+let screenStream;
+
+async function shareScreen() {
+  try {
+    screenStream = await navigator.mediaDevices.getDisplayMedia({
+      video: true
+    });
+
+    const screenTrack = screenStream.getVideoTracks()[0];
+
+    // Replace video track for all peers
+    for (let userId in peers) {
+      const sender = peers[userId].peerConnection
+        .getSenders()
+        .find((s) => s.track.kind === "video");
+
+      if (sender) {
+        sender.replaceTrack(screenTrack);
+      }
+    }
+
+    // Replace own video
+    const videoTrack = screenTrack;
+    myVideo.srcObject = new MediaStream([videoTrack]);
+
+    // When user stops sharing
+    screenTrack.onended = () => {
+      stopScreenShare();
+    };
+
+  } catch (err) {
+    console.error("Error sharing screen:", err);
+  }
+}
+function stopScreenShare() {
+  const videoTrack = myVideoStream.getVideoTracks()[0];
+
+  for (let userId in peers) {
+    const sender = peers[userId].peerConnection
+      .getSenders()
+      .find((s) => s.track.kind === "video");
+
+    if (sender) {
+      sender.replaceTrack(videoTrack);
+    }
+  }
+
+  myVideo.srcObject = myVideoStream;
+}
